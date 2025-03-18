@@ -12,8 +12,8 @@ return new class extends Migration {
             $table->text('description'); 
             $table->integer('duration'); 
             $table->enum('difficulty_level', ['beginner', 'intermediate', 'advanced']); 
-            $table->unsignedBigInteger('category_id')->references('id')->on('categories')->onDelete('cascade'); 
-            $table->unsignedBigInteger('subcategory_id')->nullable()->references('id')->on('categories')->onDelete('cascade'); 
+            $table->char('category_id', 36)->references('id')->on('categories')->onDelete('cascade'); 
+            $table->char('subcategory_id', 36)->nullable()->references('id')->on('categories')->onDelete('cascade'); 
             $table->enum('status', ['open', 'in_progress', 'completed'])->default('open'); 
             $table->timestamps();
         });

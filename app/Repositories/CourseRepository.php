@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Models\Course;
@@ -32,6 +31,6 @@ class CourseRepository implements CourseRepositoryInterface
     public function deleteCourse($id)
     {
         $course = Course::findOrFail($id);
-        $course->delete();
+        return $course->delete();
     }
 }
