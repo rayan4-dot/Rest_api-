@@ -1,13 +1,11 @@
 <?php
-
-
-
-namespace App\Http\Controllers\api;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResource;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
@@ -32,7 +30,6 @@ class CategoryController extends Controller
         return CategoryResource::collection($subcategories);
     }
 
-
     public function show($id)
     {
         $category = $this->categoryService->getCategoryById($id);
@@ -41,30 +38,48 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
+
+        if (!Gate::allows('manage-categories')) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+    
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'parent_id' => 'nullable|exists:categories,id', 
+            'parent_id' => 'nullable|exists:categories,id',
         ]);
-
+    
         $category = $this->categoryService->createCategory($data);
         return new CategoryResource($category);
     }
 
+   
 
     public function update(Request $request, $id)
     {
+        $category = $this->categoryService->getCategoryById($id);
+    
 
+        if (!Gate::allows('manage-categories')) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+    
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
         ]);
-
+    
         $category = $this->categoryService->updateCategory($id, $validatedData);
         return new CategoryResource($category);
     }
-
-
+    
     public function destroy($id)
     {
+        $category = $this->categoryService->getCategoryById($id);
+    
+
+        if (!Gate::allows('manage-categories')) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+    
         $this->categoryService->deleteCategory($id);
         return response()->json(null, 204);
     }

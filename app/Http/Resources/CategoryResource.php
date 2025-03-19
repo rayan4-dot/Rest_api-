@@ -1,5 +1,5 @@
 <?php
-// app/Http/Resources/CategoryResource.php
+
 
 namespace App\Http\Resources;
 
