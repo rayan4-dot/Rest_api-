@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -9,6 +10,7 @@ use App\Http\Resources\CourseResource;
 use App\Models\Course;
 use App\Services\CourseService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CourseController extends Controller
 {
@@ -33,18 +35,42 @@ class CourseController extends Controller
 
     public function store(StoreCourseRequest $request)
     {
-        $course = $this->courseService->createCourse($request->validated());
-        return new CourseResource($course);
-    }
 
+        if (!Gate::allows('create-courses')) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+
+        $course = $this->courseService->createCourse($request->validated());
+
+
+        if (!$course) {
+            return response()->json(['message' => 'Failed to create course'], 500);
+        }
+
+        return new CourseResource($course);  
+    }
+  
     public function update(UpdateCourseRequest $request, $id)
     {
+        $course = $this->courseService->getCourseById($id);
+    
+        if (!Gate::allows('update-courses', $course)) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+    
         $course = $this->courseService->updateCourse($id, $request->validated());
         return new CourseResource($course);
     }
-
+    
     public function destroy($id)
     {
+        $course = $this->courseService->getCourseById($id);
+    
+        if (!Gate::allows('delete-courses', $course)) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+    
         $this->courseService->deleteCourse($id);
         return response()->json(['message' => 'Course deleted successfully']);
     }

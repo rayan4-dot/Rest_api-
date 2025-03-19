@@ -19,7 +19,7 @@ class Course extends Model
         'status',
     ];
 
-    // Relations
+
     public function category()
     {
         return $this->belongsTo(Category::class);

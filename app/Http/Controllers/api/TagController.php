@@ -1,12 +1,14 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreTagRequest;
-use App\Http\Requests\UpdateTagRequest;
-use App\Http\Resources\TagResource;
 use App\Services\TagService;
 use Illuminate\Http\Request;
+use App\Http\Resources\TagResource;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\StoreTagRequest;
+use App\Http\Requests\UpdateTagRequest;
 
 class TagController extends Controller
 {
@@ -33,6 +35,11 @@ class TagController extends Controller
 
     public function store(StoreTagRequest $request)
     {
+
+        if (!Gate::allows('manage-tags')) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         $data = $request->validated();
         $tag = $this->tagService->createTag($data);
         return new TagResource($tag);
