@@ -7,7 +7,7 @@ use App\Models\User;
 class EnrollmentPolicy
 {
     /**
-     * Determine if the user can enroll in a course.
+
      */
     public function enroll(User $user): bool
     {
@@ -15,18 +15,17 @@ class EnrollmentPolicy
     }
 
     /**
-     * Determine if the user can update the enrollment status.
+
      */
     public function updateStatus(User $user, Enrollment $enrollment): bool
     {
-        return $user->hasRole('teacher');
+        return in_array($user->role, ['teacher', 'admin']);
     }
 
     /**
-     * Determine if the user can delete an enrollment.
+
      */
     public function delete(User $user, Enrollment $enrollment): bool
     {
-        return $user->hasRole('teacher') || $enrollment->user_id === $user->id;
-    }
+        return $user->role === 'teacher' || $user->role === 'admin' || $enrollment->user_id === $user->id;    }
 }
