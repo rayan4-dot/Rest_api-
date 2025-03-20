@@ -56,26 +56,25 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 
 Route::middleware('auth:sanctum')->group(function () {
+
+    Route::post('/logout', [AuthController::class, 'logout']);
+
+    // enrollment 
+    Route::post('/courses/{course}/enroll', [EnrollmentController::class, 'enroll'])->middleware('can:enroll');
+    Route::get('/courses/{course}/enrollments', [EnrollmentController::class, 'getEnrollmentsByCourse']);
+    Route::put('/enrollments/{enrollment}', [EnrollmentController::class, 'updateStatus']);
+    Route::get('/enrollments/me', [EnrollmentController::class, 'myEnrollments']);
+    Route::delete('/enrollments/{enrollment}', [EnrollmentController::class, 'destroy']);
+
+    // course routes
     Route::post('courses', [CourseController::class, 'store'])->middleware('can:create-courses');
     Route::get('courses', [CourseController::class, 'index']);
     Route::get('courses/{id}', [CourseController::class, 'show']);
     Route::put('courses/{id}', [CourseController::class, 'update'])->middleware('can:update-courses');
     Route::delete('courses/{id}', [CourseController::class, 'destroy'])->middleware('can:delete-courses');
-
-
-        // Enrollment routes
-        Route::post('/courses/{course}/enroll', [EnrollmentController::class, 'enroll']);
-        Route::get('/courses/{course}/enrollments', [EnrollmentController::class, 'getEnrollmentsByCourse']);
-        Route::put('/enrollments/{enrollment}', [EnrollmentController::class, 'updateStatus']);
-        Route::get('/enrollments/me', [EnrollmentController::class, 'myEnrollments']);
-        Route::delete('/enrollments/{enrollment}', [EnrollmentController::class, 'destroy']);
-
-    Route::post('/tags', [TagController::class, 'store'])->middleware('can:manage-tags');
-
-
-    // Route::apiResource('categories', CategoryController::class);
-    // Route::get('categories/{categoryId}/subcategories', [CategoryController::class, 'getSubcategories']);
-});
+//tags
+    Route::apiResource('/tags', TagController::class)->middleware('can:manage-tags');
+}); 
 
 
 Route::apiResource('categories', CategoryController::class);

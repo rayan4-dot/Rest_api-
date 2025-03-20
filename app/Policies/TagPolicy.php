@@ -8,21 +8,21 @@ class TagPolicy
 {
     public function viewAny(User $user)
     {
-        return true; // Tout le monde peut voir les tags
+        return true; 
     }
 
     public function create(User $user)
     {
-        return $user->hasPermissionTo('manage-tags'); // Seul l'admin peut créer des tags
+        return $user->hasPermissionTo('manage-tags'); 
     }
 
     public function update(User $user, Tag $tag)
     {
-        return $user->hasPermissionTo('manage-tags'); // Seul l'admin peut mettre à jour les tags
+        return $user->hasPermissionTo('manage-tags'); 
     }
 
     public function delete(User $user, Tag $tag)
     {
-        return $user->hasPermissionTo('manage-tags'); // Seul l'admin peut supprimer les tags
+        return $user->hasPermissionTo('manage-tags'); 
     }
 }

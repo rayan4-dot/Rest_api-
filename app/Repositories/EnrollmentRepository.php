@@ -9,19 +9,30 @@ class EnrollmentRepository implements EnrollmentRepositoryInterface
 {
     public function enroll(int $userId, int $courseId)
     {
+            
         $isExist = Enrollment::where('user_id', $userId)
             ->where('course_id', $courseId)
             ->exists();
-
+    
         if ($isExist) {
-            return false;
+            return [
+                'success' => false,
+                'message' => 'You are already enrolled in this course'
+            ];
         }
+    
 
-        return Enrollment::create([
+        $enrollment = Enrollment::create([
             'user_id' => $userId,
             'course_id' => $courseId,
-            'status' => 'pending' // Default status
+            'status' => 'pending'
         ]);
+    
+        return [
+            'success' => true,
+            'message' => 'Course enrollment request submitted successfully',
+            'data' => $enrollment
+        ];
     }
 
     public function getEnrollmentByCourse(int $courseId)

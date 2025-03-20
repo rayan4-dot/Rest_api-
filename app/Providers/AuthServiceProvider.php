@@ -30,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
     ];
 
     /**
-     * Enregistrez les services d'authentification / autorisation.
+
      */
     public function boot(): void
     {
@@ -44,6 +44,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('manage-categories', function ($user) {
             return $user->hasPermissionTo('manage-categories');
         });
+
+        Gate::define('enroll', [EnrollmentPolicy::class, 'enroll']);
+    
         
             // for the fucking courses 
             Gate::define('create-courses', function ($user) {

@@ -10,7 +10,7 @@ use App\Repositories\Interfaces\TagRepositoryInterface;
 use App\Repositories\Interfaces\CourseRepositoryInterface;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 
-use App\Interfaces\EnrollmentRepositoryInterface;
+use App\Repositories\Interfaces\EnrollmentRepositoryInterface;
 use App\Repositories\EnrollmentRepository;
 
  
@@ -27,8 +27,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->bind(TagRepositoryInterface::class, TagRepository::class);
         $this->app->bind(CourseRepositoryInterface::class, CourseRepository::class);
-        // $this->app->bind(EnrollmentRepositoryInterface::class, Enrollmentrepository::class);
-
+        $this->app->bind(EnrollmentRepositoryInterface::class,EnrollmentRepository::class);
     }
 
     /**

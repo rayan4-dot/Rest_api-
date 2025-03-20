@@ -17,12 +17,12 @@ class EnrollmentController extends Controller
     ) {}
 
     /**
-     * Enroll the authenticated user in a course.
+
      */
     public function enroll(int $courseId)
     {
-        // Check if the user is authorized to enroll
-        if (!Gate::allows('enroll', Enrollment::class)) {
+
+        if (!Gate::allows('enroll')) {
             return response()->json([
                 'success' => false,
                 'message' => 'You are not authorized to enroll in this course'
@@ -44,10 +44,14 @@ class EnrollmentController extends Controller
             'message' => 'Course enrollment request submitted successfully',
             'data' => new EnrollmentResource($enrollment->load(['user', 'course']))
         ], 201);
+
+
+        return $user->hasPermissionTo('enroll');
+
     }
 
     /**
-     * Get all enrollments for a course.
+
      */
     public function getEnrollmentsByCourse(int $courseId)
     {
@@ -60,13 +64,13 @@ class EnrollmentController extends Controller
     }
 
     /**
-     * Update the status of an enrollment.
+
      */
     public function updateStatus(Request $request, int $id)
     {
         $enrollment = Enrollment::findOrFail($id);
     
-        // Check if the user is authorized to update the status
+
         if (!Gate::allows('updateStatus', $enrollment)) {
             return response()->json([
                 'success' => false,
@@ -88,7 +92,6 @@ class EnrollmentController extends Controller
     }
 
     /**
-     * Get all enrollments for the authenticated user.
      */
     public function myEnrollments()
     {
