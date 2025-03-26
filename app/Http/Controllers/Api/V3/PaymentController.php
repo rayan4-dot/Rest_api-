@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\V3;
 use App\Http\Controllers\Controller;
 use App\Services\PaymentService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
@@ -19,17 +18,42 @@ class PaymentController extends Controller
     public function checkout(Request $request)
     {
         $courseId = $request->query('course_id');
-        $paymentMethodId = $request->query('payment_method_id');
-        $payment = $this->paymentService->checkout($courseId, $paymentMethodId);
-        return response()->json($payment, 201);
+        try {
+            $result = $this->paymentService->checkout($courseId);
+            return response()->json($result, 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
+    }
+
+    public function success(Request $request)
+    {
+        $sessionId = $request->query('session_id');
+        if (!$sessionId) {
+            return response()->json(['error' => 'Session ID required'], 400);
+        }
+    
+        try {
+            $payment = $this->paymentService->handleSuccess($sessionId);
+            return response()->json([
+                'message' => 'Payment successful, enrolled in course',
+                'course_id' => $payment->course_id,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
     }
 
     public function status($id)
     {
-        $payment = $this->paymentService->getStatus($id);
-        return response()->json($payment);
+        try {
+            $payment = $this->paymentService->getStatus($id);
+            return response()->json($payment);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 403);
+        }
     }
-
+    
     public function history()
     {
         $history = $this->paymentService->getUserHistory();

@@ -45,4 +45,8 @@ class Course extends Model
     {
         return $this->hasMany(Video::class);
     }
+    public function isFree()
+{
+    return is_null($this->price) || $this->price == 0;
+}
 }

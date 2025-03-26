@@ -109,7 +109,16 @@ Route::prefix('v3')->middleware('auth:sanctum')->group(function () {
     })->middleware('role:admin');
 
 
-    Route::get('/payments/checkout', [PaymentController::class, 'checkout'])->middleware('role:student');
-    Route::get('/payments/status/{id}', [PaymentController::class, 'status']);
-    Route::get('/payments/history', [PaymentController::class, 'history']);
+});
+
+Route::prefix('v3')->group(function () {
+    // Public success endpoint for Stripe redirect
+    Route::get('/payments/success', [PaymentController::class, 'success']);
+
+    // Authenticated routes
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/payments/checkout', [PaymentController::class, 'checkout'])->middleware('role:student');
+        Route::get('/payments/status/{id}', [PaymentController::class, 'status']);
+        Route::get('/payments/history', [PaymentController::class, 'history']);
+    });
 });

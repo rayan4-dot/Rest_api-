@@ -17,9 +17,14 @@ class PaymentRepository implements PaymentRepositoryInterface
         return Payment::findOrFail($id);
     }
 
+    public function findByStripeTransactionId($stripeId)
+    {
+        return Payment::where('stripe_transaction_id', $stripeId)->firstOrFail();
+    }
+
     public function getUserPayments($userId)
     {
-        return Payment::where('user_id', $userId)->get();
+        return Payment::where('user_id', $userId)->with('course:title,id')->get();
     }
 
     public function getAll()

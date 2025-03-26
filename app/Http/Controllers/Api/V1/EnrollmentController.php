@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Enrollment;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 
 class EnrollmentController extends Controller
@@ -13,13 +14,27 @@ class EnrollmentController extends Controller
     {
         $student = $request->user();
         $course = Course::findOrFail($courseId);
-
+    
         if ($student->courses()->where('course_id', $courseId)->exists()) {
             return response()->json(['message' => 'Already enrolled'], 400);
         }
-
+    
+        if ($course->isFree()) {
+            $student->courses()->attach($courseId, ['progress_status' => 'in_progress']);
+            return response()->json(['message' => 'Enrolled successfully in free course'], 201);
+        }
+    
+        $payment = Payment::where('user_id', $student->id)
+            ->where('course_id', $courseId)
+            ->where('status', 'completed')
+            ->first();
+    
+        if (!$payment) {
+            return response()->json(['message' => 'Payment required for this course'], 402);
+        }
+    
         $student->courses()->attach($courseId, ['progress_status' => 'in_progress']);
-        return response()->json(['message' => 'Enrolled successfully'], 201);
+        return response()->json(['message' => 'Enrolled successfully after payment'], 201);
     }
 
     public function progress(Request $request, $enrollmentId)
