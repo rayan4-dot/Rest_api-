@@ -24,6 +24,10 @@ class SubcategoryController extends Controller
     {
         return response()->json($this->subcategoryService->create($request->validated()), 201);
     }
+    public function show($id)
+    {
+        return response()->json($this->subcategoryService->show($id));
+    }
 
     public function update(StoreSubcategoryRequest $request, $id)
     {

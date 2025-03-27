@@ -42,19 +42,21 @@ Route::prefix('v1')->group(function () {
 
 
         Route::get('/tags', [TagController::class, 'index']);
+        Route::get('/tags/{id}', [TagController::class, 'show']);
         Route::post('/tags', [TagController::class, 'store'])->middleware('role:admin');
         Route::put('/tags/{id}', [TagController::class, 'update'])->middleware('role:admin');
         Route::delete('/tags/{id}', [TagController::class, 'destroy'])->middleware('role:admin');
 
 
         Route::get('/subcategories', [SubcategoryController::class, 'index']);
-        Route::get('/subcategories/{id}', [SubcategoryController::class, 'index']); 
+        Route::get('/subcategories/{id}', [SubcategoryController::class, 'show']); 
         Route::post('/subcategories', [SubcategoryController::class, 'store'])->middleware('role:admin');
         Route::put('/subcategories/{id}', [SubcategoryController::class, 'update'])->middleware('role:admin');
         Route::delete('/subcategories/{id}', [SubcategoryController::class, 'destroy'])->middleware('role:admin');
 
 
         Route::get('/categories', [CategoryController::class, 'index']);
+        Route::get('/categories/{id}', [CategoryController::class, 'show']);
         Route::post('/categories', [CategoryController::class, 'store'])->middleware('role:admin');
         Route::put('/categories/{id}', [CategoryController::class, 'update'])->middleware('role:admin');
         Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->middleware('role:admin');

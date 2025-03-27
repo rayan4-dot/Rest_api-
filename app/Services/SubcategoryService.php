@@ -17,6 +17,8 @@ class SubcategoryService
     {
         return $this->subcategoryRepository->all();
     }
+    public function show($id) { return $this->subcategoryRepository->show($id); }
+
 
     public function create(array $data)
     {

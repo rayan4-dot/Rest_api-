@@ -22,6 +22,8 @@ class TagService
     {
         return $this->tagRepository->create($data);
     }
+    public function show($id) { return $this->tagRepository->show($id); }
+
 
     public function update($id, array $data)
     {

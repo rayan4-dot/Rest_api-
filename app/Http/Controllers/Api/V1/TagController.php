@@ -26,6 +26,12 @@ class TagController extends Controller
         return response()->json($this->tagService->create($request->validated()), 201);
     }
 
+
+    public function show($id)
+    {
+        return response()->json($this->tagService->show($id));
+    }
+
     public function update(UpdateTagRequest $request, $id)
     {
         return response()->json($this->tagService->update($id, $request->validated()));

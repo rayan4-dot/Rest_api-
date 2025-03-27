@@ -24,6 +24,9 @@ class TagRepository implements TagRepositoryInterface
         return $tag;
     }
 
+    public function show($id) { return Tag::findOrFail($id); }
+
+
     public function delete($id)
     {
         $tag = Tag::findOrFail($id);

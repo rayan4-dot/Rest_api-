@@ -17,6 +17,9 @@ class SubcategoryRepository implements SubcategoryRepositoryInterface
         return Subcategory::create($data);
     }
 
+    public function show($id) { return Subcategory::findOrFail($id); }
+
+
     public function update($id, array $data)
     {
         $subcategory = Subcategory::findOrFail($id);
