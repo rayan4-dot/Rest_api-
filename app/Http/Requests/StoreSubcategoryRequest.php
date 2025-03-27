@@ -23,7 +23,7 @@ class StoreSubcategoryRequest extends FormRequest
     {
         return [
 
-            'name' => 'required|string|unique:subcategories,name,' . $this->id, 
+            'name' => 'required|string|unique:sub_categories,name,' . $this->id, 
             'category_id' => 'required|exists:categories,id',
         ];
     }

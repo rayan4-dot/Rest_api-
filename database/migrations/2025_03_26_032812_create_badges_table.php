@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('badges', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // e.g., "Beginner", "Expert"
+            $table->string('name'); 
             $table->string('description')->nullable();
-            $table->string('condition_type'); // e.g., "course_completion", "mentor_courses"
-            $table->integer('condition_value'); // e.g., 5 for 5 courses
+            $table->string('condition_type'); 
+            $table->integer('condition_value'); 
             $table->timestamps();
         });
     }

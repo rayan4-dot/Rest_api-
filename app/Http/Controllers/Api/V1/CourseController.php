@@ -27,7 +27,7 @@ class CourseController extends Controller
     public function store(CourseRequest $request)
     {
         $data = $request->validated();
-        $data['mentor_id'] = auth()->id();
+        $data['mentor_id'] = auth()->id();  
         $course = $this->courseService->createCourse($data);
         return response()->json($course, 201);
     }

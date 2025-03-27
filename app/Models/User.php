@@ -68,14 +68,14 @@ class User extends Authenticatable
     }
 
 
-    // Mentor-created courses
+
     public function createdCourses()
     {
         return $this->hasMany(Course::class, 'mentor_id');
     }
     
 
-    // Badges
+
     public function badges()
     {
         return $this->belongsToMany(Badge::class, 'user_badges')->withPivot('awarded_at');

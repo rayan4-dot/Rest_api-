@@ -12,7 +12,7 @@ class MentorController extends Controller
     {
         $query = $request->query('search');
 
-        $mentors = User::select('id', 'name') // Only name and id (for relation)
+        $mentors = User::select('id', 'name') 
             ->whereHas('roles', function ($q) {
                 $q->where('name', 'mentor');
             })
@@ -26,7 +26,7 @@ class MentorController extends Controller
             ->with(['createdCourses' => function ($q) {
                 $q->select('id', 'title', 'description', 'mentor_id');
             }])
-            ->get(); // Drop pagination for simplicity
+            ->get(); 
 
         return response()->json($mentors);
     }

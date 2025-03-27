@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Services\TagService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTagRequest;
-use App\Services\TagService;
+use App\Http\Requests\UpdateTagRequest;
 
 class TagController extends Controller
 {
@@ -25,7 +26,7 @@ class TagController extends Controller
         return response()->json($this->tagService->create($request->validated()), 201);
     }
 
-    public function update(StoreTagRequest $request, $id)
+    public function update(UpdateTagRequest $request, $id)
     {
         return response()->json($this->tagService->update($id, $request->validated()));
     }

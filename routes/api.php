@@ -48,7 +48,7 @@ Route::prefix('v1')->group(function () {
 
 
         Route::get('/subcategories', [SubcategoryController::class, 'index']);
-        Route::get('/subcategories/{id}', [SubcategoryController::class, 'index']); // Should this be 'show'?
+        Route::get('/subcategories/{id}', [SubcategoryController::class, 'index']); 
         Route::post('/subcategories', [SubcategoryController::class, 'store'])->middleware('role:admin');
         Route::put('/subcategories/{id}', [SubcategoryController::class, 'update'])->middleware('role:admin');
         Route::delete('/subcategories/{id}', [SubcategoryController::class, 'destroy'])->middleware('role:admin');
@@ -102,6 +102,9 @@ Route::prefix('v3')->middleware('auth:sanctum')->group(function () {
     Route::post('/badges', [BadgeController::class, 'store'])->middleware('role:admin');
     Route::put('/badges/{id}', [BadgeController::class, 'update'])->middleware('role:admin');
     Route::delete('/badges/{id}', [BadgeController::class, 'destroy'])->middleware('role:admin');
+
+
+    //admin awards badgs to users
     Route::post('/students/{id}/award-badges', function ($id) {
         $service = app(\App\Services\BadgeService::class);
         $service->awardBadges($id);
@@ -112,10 +115,10 @@ Route::prefix('v3')->middleware('auth:sanctum')->group(function () {
 });
 
 Route::prefix('v3')->group(function () {
-    // Public success endpoint for Stripe redirect
+
     Route::get('/payments/success', [PaymentController::class, 'success']);
 
-    // Authenticated routes
+
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/payments/checkout', [PaymentController::class, 'checkout'])->middleware('role:student');
         Route::get('/payments/status/{id}', [PaymentController::class, 'status']);

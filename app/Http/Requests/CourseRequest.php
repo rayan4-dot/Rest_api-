@@ -25,8 +25,21 @@ class CourseRequest extends FormRequest
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'status' => 'required|in:open,in_progress,completed',
-            'subcategory_id' => 'nullable|exists:subcategories,id',
+            'category_id' => 'required|exists:categories,id',
+            'subcategory_id' => 'nullable|exists:sub_categories,id',
+            'price' => 'nullable|numeric|min:0',
             
         ];
+
+
+        //store case
+
+
+        if ($this->isMethod('post')) {
+            $rules['title'] = 'required|string|max:255';
+            $rules['description'] = 'required|string';
+            $rules['status'] = 'required|in:open,in_progress,completed';
+            $rules['category_id'] = 'required|exists:categories,id';
+        }
     }
 }

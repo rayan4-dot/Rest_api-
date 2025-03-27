@@ -48,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Removed parent::boot() as the parent class does not have a boot method.
+
 
         Route::aliasMiddleware('role', RoleMiddleware::class);
 

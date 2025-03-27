@@ -11,7 +11,7 @@ class UserController extends Controller
     public function show($id, Request $request)
     {
         $user = User::findOrFail($id);
-        return response()->json($user->only('id', 'name', 'photo')); // Photo only
+        return response()->json($user->only('id', 'name', 'photo')); 
     }
 
     public function update($id, Request $request)
@@ -22,11 +22,11 @@ class UserController extends Controller
         }
 
         $data = $request->validate([
-            'photo' => 'nullable|string', // Only photo
+            'photo' => 'nullable|string', 
         ]);
 
         $user->update($data);
-        return response()->json($user->only('id', 'name', 'photo')); // Photo only
+        return response()->json($user->only('id', 'name', 'photo')); 
     }
 
     public function destroy($id)

@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
 
-            $table->decimal('price', 8, 2)->nullable(); // e.g., 19.99
-            $table->boolean('is_subscription')->default(false); // Single purchase or subscription
+            $table->decimal('price', 8, 2)->nullable();
+            $table->boolean('is_subscription')->default(false); 
 
             $table->enum('status', ['open', 'in_progress', 'completed'])->default('open');
             $table->foreignId('category_id')->constrained()->onDelete('cascade'); 

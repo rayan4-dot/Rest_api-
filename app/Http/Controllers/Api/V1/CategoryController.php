@@ -6,6 +6,7 @@ use App\Services\CategoryService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 
 
 
@@ -33,7 +34,7 @@ class CategoryController extends Controller
         return response()->json($this->categoryService->show($id));
     }
 
-    public function update(StoreCategoryRequest $request, $id)
+    public function update(UpdateCategoryRequest $request, $id)
     {
         return response()->json($this->categoryService->update($id, $request->validated()));
     }
@@ -41,6 +42,6 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $this->categoryService->delete($id);
-        return response()->json(null, 204);
+        return response()->json(['message' => 'Category deleted successfully']);
     }
 }

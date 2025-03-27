@@ -12,10 +12,10 @@ class AdminController extends Controller
 {
     public function stats(Request $request)
     {
-        // Total courses
+
         $total = Course::count();
 
-        // By status
+
         $byStatus = Course::groupBy('status')
             ->select('status', DB::raw('count(*) as count'))
             ->get()
@@ -26,7 +26,7 @@ class AdminController extends Controller
                 ];
             });
 
-        // By category
+
         $byCategory = Course::with('category')
             ->groupBy('category_id')
             ->select('category_id', DB::raw('count(*) as count'))
@@ -42,8 +42,8 @@ class AdminController extends Controller
                 ];
             });
 
-        // Most enrolled (top 5)
-        $mostEnrolled = Course::withCount('students') // Assuming 'students' relation from enrollments
+
+        $mostEnrolled = Course::withCount('students') 
             ->orderBy('students_count', 'desc')
             ->limit(5)
             ->get()
@@ -56,14 +56,14 @@ class AdminController extends Controller
                     'category_id' => $course->category_id,
                     'created_at' => $course->created_at->toISOString(),
                     'updated_at' => $course->updated_at->toISOString(),
-                    'price' => $course->price ?? 0, // Adjust if nullable
-                    'currency' => 'USD', // Hardcoded, adjust if dynamic
+                    'price' => $course->price ?? 0, 
+                    'currency' => 'USD', 
                     'is_free' => $course->price == 0 ? 1 : 0,
                     'enrollments_count' => $course->students_count,
                 ];
             });
 
-        // Recent courses (last 5)
+
         $recent = Course::orderBy('created_at', 'desc')
             ->limit(5)
             ->get()

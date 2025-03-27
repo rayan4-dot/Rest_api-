@@ -15,7 +15,7 @@ class PaymentService
     public function __construct(PaymentRepositoryInterface $paymentRepository)
     {
         $this->paymentRepository = $paymentRepository;
-        Stripe::setApiKey(env('STRIPE_SECRET')); // Stripe key from .env
+        Stripe::setApiKey(env('STRIPE_SECRET')); 
     }
 
  
@@ -71,7 +71,7 @@ class PaymentService
 
         if ($session->payment_status === 'paid' && $payment->status !== 'completed') {
             $payment->update(['status' => 'completed']);
-            $user = $payment->student; // Assuming student() relation
+            $user = $payment->student;
             $user->courses()->attach($payment->course_id, ['progress_status' => 'in_progress']);
         }
 

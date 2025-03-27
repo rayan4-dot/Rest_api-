@@ -11,24 +11,24 @@ use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
-    // Register
+
     public function register(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|confirmed',
-            'role_id' => 'required|exists:roles,id' // Still validate role_id for input
+            'role_id' => 'required|exists:roles,id'
         ]);
 
-        // Create user without role_id
+
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
 
-        // Assign role using Spatie
+
         $user->assignRole(Role::find($validated['role_id'])->name);
 
         $token = $user->createToken('API Token')->plainTextToken;
@@ -39,7 +39,7 @@ class AuthController extends Controller
         ], 201);
     }
 
-    // Login
+
     public function login(Request $request)
     {
         $validated = $request->validate([

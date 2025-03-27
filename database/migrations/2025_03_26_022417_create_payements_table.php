@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('course_id')->nullable()->constrained()->onDelete('set null');
             $table->string('stripe_transaction_id');
             $table->decimal('amount', 8, 2);
-            $table->string('status')->default('pending'); // pending, completed, failed
+            $table->string('status')->default('pending'); 
             $table->boolean('is_subscription')->default(false);
             $table->timestamps();
         });
