@@ -1,66 +1,712 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Edex API
+Edex API is a Laravel-based RESTful API for an online learning platform. It allows users with different roles (Admin, Mentor, Student) to manage courses, categories, subcategories, tags, videos, enrollments, badges, roles, and payments. The API is versioned (v1 and v3) and uses Laravel Sanctum for authentication.
+Table of Contents
+Project Overview (#project-overview)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Prerequisites (#prerequisites)
 
-## About Laravel
+Installation (#installation)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Environment Configuration (.env) (#environment-configuration-env)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Database Setup (#database-setup)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Seeder Users (#seeder-users)
 
-## Learning Laravel
+API Routes (#api-routes)
+Unauthenticated Endpoints (#unauthenticated-endpoints)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Admin Endpoints (#admin-endpoints)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Mentor Endpoints (#mentor-endpoints)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Student Endpoints (#student-endpoints)
 
-## Laravel Sponsors
+Authenticated (Any Role) Endpoints (#authenticated-any-role-endpoints)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Testing in Postman (#testing-in-postman)
 
-### Premium Partners
+License (#license)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Project Overview
+Edex API provides a platform for:
+Admins to manage categories, subcategories, tags, roles, badges, and users.
 
-## Contributing
+Mentors to create, update, and delete courses and videos.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Students to enroll in courses, update progress, and make payments.
 
-## Code of Conduct
+The API is structured with two versions:
+v1: Core functionality (courses, categories, enrollments, etc.).
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+v3: Additional features (badges, student progress, payments).
 
-## Security Vulnerabilities
+Prerequisites
+PHP >= 8.1
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Composer
 
-## License
+MySQL or another supported database
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Laravel 10.x
+
+Postman (for testing API endpoints)
+
+Installation
+Clone the Repository:
+bash
+
+git clone https://github.com/rayan4-dot/Rest_api-
+cd Rest_api-
+
+Install Dependencies:
+bash
+
+composer install
+
+Copy the .env File:
+bash
+
+cp .env.example .env
+
+Generate Application Key:
+bash
+
+php artisan key:generate
+
+Set Up the Database:
+Create a MySQL database named edex.
+
+Update the .env file with your database credentials (see below).
+
+Run Migrations and Seeders:
+bash
+
+php artisan migrate --seed
+
+Start the Development Server:
+bash
+
+php artisan serve
+
+The API will be available at http://127.0.0.1:8000.
+
+Environment Configuration (.env)
+Below is an example .env configuration for the Edex API:
+env
+
+APP_NAME=Edex
+APP_ENV=local
+APP_KEY=base64:your-generated-key
+APP_DEBUG=true
+APP_URL=http://127.0.0.1:8000
+
+LOG_CHANNEL=stack
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=edex
+DB_USERNAME=root
+DB_PASSWORD=
+
+BROADCAST_DRIVER=log
+CACHE_DRIVER=file
+FILESYSTEM_DISK=local
+QUEUE_CONNECTION=sync
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+
+SANCTUM_STATEFUL_DOMAINS=localhost:8000
+
+APP_URL: Set to your local server URL (http://127.0.0.1:8000).
+
+DB_DATABASE: Set to edex (or your database name).
+
+DB_USERNAME and DB_PASSWORD: Update with your MySQL credentials.
+
+SANCTUM_STATEFUL_DOMAINS: Ensures Sanctum works for local development.
+
+Database Setup
+Create the Database:
+Create a MySQL database named edex:
+sql
+
+CREATE DATABASE edex;
+
+Run Migrations:
+The migrations create tables for users, roles, categories, sub_categories, tags, courses, videos, enrollments, badges, etc.
+
+Run:
+bash
+
+php artisan migrate
+
+Seed the Database:
+The seeder creates initial users with roles for testing.
+
+Run:
+bash
+
+php artisan db:seed
+
+Seeder Users
+The database seeder creates three users with different roles for testing:
+Role
+
+Email
+
+Password
+
+Description
+
+Admin
+
+admin@example.com
+
+password123
+
+Can manage categories, tags, etc.
+
+Mentor
+
+mentor@example.com
+
+password123
+
+Can create and manage courses.
+
+Student
+
+student@example.com
+
+password123
+
+Can enroll in courses and pay.
+
+To log in as any of these users, use the /api/v1/login endpoint with the email and password.
+API Routes
+The API routes are defined in routes/api.php and are versioned (v1 and v3). Below are the POST, PUT, and DELETE endpoints, organized by role in a logical workflow.
+Unauthenticated Endpoints
+These endpoints do not require authentication.
+Role
+
+URL
+
+Method
+
+Headers
+
+Body (JSON)
+
+Description
+
+None
+
+http://127.0.0.1:8000/api/v1/register
+
+POST
+
+Content-Type: application/json
+
+{"name": "John Doe", "email": "john@example.com", "password": "password123", "password_confirmation": "password123"}
+
+Registers a new user.
+
+None
+
+http://127.0.0.1:8000/api/v1/login
+
+POST
+
+Content-Type: application/json
+
+{"email": "admin@example.com", "password": "password123"}
+
+Logs in a user and returns a token.
+
+Admin Endpoints
+Admins manage the platform’s structure (categories, subcategories, tags, roles, badges, users).
+Role
+
+URL
+
+Method
+
+Headers
+
+Body (JSON)
+
+Description
+
+Admin
+
+http://127.0.0.1:8000/api/v1/roles
+
+POST
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+{"name": "mentor"}
+
+Creates a new role ("mentor").
+
+Admin
+
+http://127.0.0.1:8000/api/v1/categories
+
+POST
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+{"name": "Programming"}
+
+Creates a new category (ID 1).
+
+Admin
+
+http://127.0.0.1:8000/api/v1/subcategories
+
+POST
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+{"name": "Python Basics", "category_id": 1}
+
+Creates a subcategory (ID 1).
+
+Admin
+
+http://127.0.0.1:8000/api/v1/tags
+
+POST
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+{"name": "Python"}
+
+Creates a new tag (ID 1).
+
+Admin
+
+http://127.0.0.1:8000/api/v3/badges
+
+POST
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+{"name": "Beginner Badge", "description": "Awarded for completing your first course"}
+
+Creates a badge (ID 1).
+
+Admin
+
+http://127.0.0.1:8000/api/v3/students/1/award-badges
+
+POST
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+None
+
+Awards badges to student (ID 1).
+
+Admin
+
+http://127.0.0.1:8000/api/v1/categories/1
+
+PUT
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+{"name": "Updated Programming"}
+
+Updates the category (ID 1).
+
+Admin
+
+http://127.0.0.1:8000/api/v1/subcategories/1
+
+PUT
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+{"name": "Updated Python Basics", "category_id": 1}
+
+Updates the subcategory (ID 1).
+
+Admin
+
+http://127.0.0.1:8000/api/v1/tags/1
+
+PUT
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+{"name": "Updated Python"}
+
+Updates the tag (ID 1).
+
+Admin
+
+http://127.0.0.1:8000/api/v1/roles/1
+
+PUT
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+{"name": "updated-mentor"}
+
+Updates the role (ID 1).
+
+Admin
+
+http://127.0.0.1:8000/api/v3/badges/1
+
+PUT
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+{"name": "Updated Beginner Badge", "description": "Updated description"}
+
+Updates the badge (ID 1).
+
+Admin
+
+http://127.0.0.1:8000/api/v1/categories/1
+
+DELETE
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+None
+
+Deletes the category (ID 1).
+
+Admin
+
+http://127.0.0.1:8000/api/v1/subcategories/1
+
+DELETE
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+None
+
+Deletes the subcategory (ID 1).
+
+Admin
+
+http://127.0.0.1:8000/api/v1/tags/1
+
+DELETE
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+None
+
+Deletes the tag (ID 1).
+
+Admin
+
+http://127.0.0.1:8000/api/v1/roles/1
+
+DELETE
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+None
+
+Deletes the role (ID 1).
+
+Admin
+
+http://127.0.0.1:8000/api/v3/badges/1
+
+DELETE
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+None
+
+Deletes the badge (ID 1).
+
+Admin
+
+http://127.0.0.1:8000/api/v1/users/1
+
+DELETE
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+None
+
+Deletes the user (ID 1).
+
+Mentor Endpoints
+Mentors create and manage courses and videos.
+Role
+
+URL
+
+Method
+
+Headers
+
+Body (JSON)
+
+Description
+
+Mentor
+
+http://127.0.0.1:8000/api/v1/courses
+
+POST
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+{"title": "Introduction to Python", "description": "Learn Python basics", "status": "open", "category_id": 1, "price": 29.99}
+
+Creates a course (ID 1).
+
+Mentor
+
+http://127.0.0.1:8000/api/v1/courses/1/videos
+
+POST
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+{"title": "Python Variables", "url": "https://example.com/video.mp4", "description": "Learn about variables in Python."}
+
+Adds a video (ID 1) to course (ID 1).
+
+Mentor
+
+http://127.0.0.1:8000/api/v1/courses/1
+
+PUT
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+{"title": "Updated Introduction to Python", "description": "Updated Python basics course", "status": "in_progress", "category_id": 1, "subcategory_id": 1, "price": 39.99}
+
+Updates the course (ID 1).
+
+Mentor
+
+http://127.0.0.1:8000/api/v1/courses/1/videos/1
+
+PUT
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+{"title": "Updated Python Variables", "url": "https://example.com/updated-video.mp4", "description": "Updated video on variables in Python."}
+
+Updates the video (ID 1).
+
+Mentor
+
+http://127.0.0.1:8000/api/v1/courses/1/videos/1
+
+DELETE
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+None
+
+Deletes the video (ID 1).
+
+Mentor
+
+http://127.0.0.1:8000/api/v1/courses/1
+
+DELETE
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+None
+
+Deletes the course (ID 1).
+
+Student Endpoints
+Students enroll in courses, update progress, and make payments.
+Role
+
+URL
+
+Method
+
+Headers
+
+Body (JSON)
+
+Description
+
+Student
+
+http://127.0.0.1:8000/api/v1/courses/1/enroll
+
+POST
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+None
+
+Enrolls in the course (ID 1).
+
+Student
+
+http://127.0.0.1:8000/api/v1/enrollments/1/progress
+
+POST
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+{"progress": 50}
+
+Updates enrollment progress (ID 1).
+
+Student
+
+http://127.0.0.1:8000/api/v1/enrollments/1
+
+DELETE
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+None
+
+Unenrolls from the course (ID 1).
+
+Authenticated (Any Role) Endpoints
+These endpoints are available to any authenticated user.
+Role
+
+URL
+
+Method
+
+Headers
+
+Body (JSON)
+
+Description
+
+Any
+
+http://127.0.0.1:8000/api/v1/users/1
+
+PUT
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+{"name": "Updated Name", "email": "updated@example.com"}
+
+Updates the user (ID 1).
+
+Any
+
+http://127.0.0.1:8000/api/v1/logout
+
+POST
+
+Content-Type: application/json
+, 
+Authorization: Bearer your-token
+
+None
+
+Logs out the user.
+
+Testing in Postman
+Get a Token:
+Log in as a user to get a Sanctum token:
+json
+
+POST http://127.0.0.1:8000/api/v1/login
+Headers: Content-Type: application/json
+Body: {
+    "email": "admin@example.com",
+    "password": "password123"
+}
+
+Copy the token from the response (e.g., "token": "1|your-sanctum-token").
+
+Test an Endpoint:
+Example: Create a category as an Admin:
+json
+
+POST http://127.0.0.1:8000/api/v1/categories
+Headers: 
+    Content-Type: application/json
+    Authorization: Bearer your-token
+Body: {
+    "name": "Programming"
+}
+
+Role-Specific Testing:
+Use the appropriate user for each role:
+Admin: admin@example.com
+
+Mentor: mentor@example.com
+
+Student: student@example.com
+
+License
+This project is licensed under the MIT License.
+
