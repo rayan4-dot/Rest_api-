@@ -4,12 +4,11 @@ namespace App\Repositories;
 
 use App\Models\Video;
 use App\Interfaces\VideoRepositoryInterface;
-use App\Models\Course;
-use Illuminate\Support\Facades\Auth;
+
 
 class VideoRepository implements VideoRepositoryInterface
 {
-    public function all($courseId = null)
+    public function all( $courseId = null)
     {
         $query = Video::query();
         if ($courseId) {

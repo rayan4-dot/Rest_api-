@@ -64,7 +64,7 @@ Route::prefix('v1')->group(function () {
 
 
 Route::post('/courses/{courseId}/enroll', [EnrollmentController::class, 'enroll'])->middleware('role:student');
-Route::delete('/enrollments/{enrollmentId}', [EnrollmentController::class, 'unenroll'])->middleware('role:student'); // New
+Route::delete('/enrollments/{enrollmentId}', [EnrollmentController::class, 'unenroll'])->middleware('role:student'); 
 Route::post('/enrollments/{enrollmentId}/progress', [EnrollmentController::class, 'progress'])->middleware('role:student');
 Route::get('/enrollments', [EnrollmentController::class, 'index'])->middleware('role:student');
 Route::get('/enrollments/{enrollmentId}', [EnrollmentController::class, 'show'])->middleware('role:student');
