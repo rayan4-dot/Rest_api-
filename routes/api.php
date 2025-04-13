@@ -90,9 +90,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\TagController;
+use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\RoleController;
 use App\Http\Controllers\Api\V1\UserController;
-use App\Http\Controllers\Api\V3\AuthController;
 use App\Http\Controllers\Api\V1\AdminController;
 use App\Http\Controllers\Api\V1\VideoController;
 use App\Http\Controllers\Api\V3\BadgeController;
@@ -100,7 +100,7 @@ use App\Http\Controllers\Api\V1\CourseController;
 use App\Http\Controllers\Api\V3\MentorController;
 use App\Http\Controllers\Api\V3\PaymentController;
 use App\Http\Controllers\Api\V3\StudentController;
-use App\Http\Controllers\Api\V3\CategoryController;
+use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\EnrollmentController;
 use App\Http\Controllers\Api\V1\SubcategoryController;
 
@@ -108,13 +108,13 @@ Route::prefix('v1')->group(function () {
     Route::get('/stats/courses', [AdminController::class, 'courseStats']);
     Route::get('/stats/categories', [AdminController::class, 'categoryStats']);
     Route::get('/stats/tags', [AdminController::class, 'tagStats']);
-    // 🟢 Public Category Routes
+
     Route::apiResource('categories', CategoryController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
 
-    // 🟢 Public Tag Routes
+
     Route::apiResource('tags', TagController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
 
-    // 🟢 Public Course Routes
+
     Route::apiResource('courses', CourseController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
 });
 
