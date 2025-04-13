@@ -6,40 +6,20 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CourseRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-        return true;
+        return true; // No auth required
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'status' => 'required|in:open,in_progress,completed',
+            'title' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
             'category_id' => 'required|exists:categories,id',
             'subcategory_id' => 'nullable|exists:sub_categories,id',
             'price' => 'nullable|numeric|min:0',
-            
+            'mentor_id' => 'nullable|exists:users,id',
         ];
-
-
-        //store case
-
-
-        if ($this->isMethod('post')) {
-            $rules['title'] = 'required|string|max:255';
-            $rules['description'] = 'required|string';
-            $rules['status'] = 'required|in:open,in_progress,completed';
-            $rules['category_id'] = 'required|exists:categories,id';
-        }
     }
 }

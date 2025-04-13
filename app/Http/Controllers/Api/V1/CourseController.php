@@ -27,19 +27,24 @@ class CourseController extends Controller
     public function store(CourseRequest $request)
     {
         $data = $request->validated();
-        $data['mentor_id'] = auth()->id();  
+        $data['mentor_id'] = 1; // Default mentor ID
+        $data['status'] = 'open';
         $course = $this->courseService->createCourse($data);
         return response()->json($course, 201);
     }
 
     public function show($id)
     {
-        return response()->json($this->courseService->getCourseById($id));
+        $course = $this->courseService->getCourseById($id);
+        // Eager-load relationships
+        $course->load(['category', 'subcategory', 'mentor', 'tags']);
+        return response()->json($course);
     }
 
     public function update(CourseRequest $request, $id)
     {
         $data = $request->validated();
+        $data['status'] = 'open';
         $course = $this->courseService->updateCourse($id, $data);
         return response()->json($course);
     }

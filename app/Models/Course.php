@@ -9,7 +9,7 @@ class Course extends Model
 {
     protected $table = 'courses';
 
-    protected $fillable = ['title', 'description', 'status', 'mentor_id', 'category_id', 'subcategory_id','status','price']; 
+    protected $fillable = ['title', 'description', 'status', 'mentor_id', 'category_id', 'subcategory_id','price']; 
     public function mentor()
     {
         return $this->belongsTo(User::class, 'mentor_id');

@@ -22,13 +22,12 @@ class StoreCourseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|unique:courses,title', 
-            'description' => 'required|string',
-            'status' => 'required|in:open,in_progress,completed',
-            'category_id' => 'required|exists:categories,id',
-            'sub_category_id' => 'nullable|exists:sub_categories,id', 
-            'mentor_id' => 'required|exists:users,id',
-
+//             'title' => 'required|string|unique:courses,title', 
+//             'description' => 'required|string',
+//             'status' => 'required|in:open,in_progress,completed',
+//             'category_id' => 'required|exists:categories,id',
+//             'sub_category_id' => 'nullable|exists:sub_categories,id', 
+// 'mentor_id' => 'nullable|exists:users,id',
         ];
     }
 }
